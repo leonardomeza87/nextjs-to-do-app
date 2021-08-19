@@ -10,9 +10,11 @@
     "server": "json-server --watch pages/api/db.json --port 5000"
   },
   "dependencies": {
+    "@svgr/webpack": "^5.5.0",
     "next": "11.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sass": "^1.38.0"
   },
   "devDependencies": {
     "eslint": "7.32.0",
