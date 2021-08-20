@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  background-color: rgb(242, 245, 254);
+  height: 100vh;
+  position: relative;
+}
+
+.mainContainer {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  padding-bottom: 32px;
+}
+
+.main {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.main::-webkit-scrollbar {
+  height: 100%;
+  width: 8px;
+  background-color: rgb(241, 241, 241);
+}
+
+.main::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.spam {
+  position: absolute;
+  height: 32px;
+  width: 100%;
+  background-color: rgb(236, 102, 102);
+  color: #fff;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+
+.firstFilters {
+  width: 94%;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #000;
+}
+
+.filter {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  background-color: blueviolet;
+  border-radius: 6px;
+  margin-bottom: 0.25rem;
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.mainSection {
+  width: 94%;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #000;
+}

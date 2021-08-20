@@ -1,0 +1,21 @@
+.container {
+  // display: flex;
+  height: 140px;
+  width: 100%;
+  padding: 8px 16px 0;
+}
+
+.area {
+  height: 100%;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #ddd;
+}
+
+.pinArea {
+  display: grid;
+  grid-template-columns: repeat(4, 46px);
+  justify-content: space-between;
+  align-items: center;
+  height: 124px;
+  // padding: 8px 16px;
+}

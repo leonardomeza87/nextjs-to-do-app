@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  section,
+  main {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+      // height: 40px;
+    }
+  }
+  main {
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: 80%;
+    }
+  }
+}

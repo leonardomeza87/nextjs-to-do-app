@@ -1,0 +1,39 @@
+.card {
+  width: 46px;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: rgba($color: #000000, $alpha: 0.03);
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(to right bottom, #40e0d0, #ff8c00, #ff0080);
+  }
+  &:hover .icon {
+    background: #333;
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  background-color: #d2e9ff;
+  border-radius: 4px;
+  margin-bottom: 4px;
+
+  svg {
+    // mix-blend-mode: difference;
+    fill: #66b5ff;
+    height: 100%;
+    width: 100%;
+  }
+}
