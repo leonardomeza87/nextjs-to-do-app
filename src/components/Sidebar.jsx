@@ -1,5 +1,5 @@
 import Image from "next/image";
-import s from "../styles/Sidebar.module.scss";
+import styles from "../styles/Sidebar.module.scss";
 import CheckboxSVG from "../../public/assets/checkbox.svg";
 import CalendarSVG from "../../public/assets/calendar.svg";
 import SearchSVG from "../../public/assets/search.svg";
@@ -9,11 +9,11 @@ import EllipsisSVG from "../../public/assets/ellipsis-horizontal.svg";
 
 const Sidebar = ({ profilePic }) => {
   return (
-    <div className={s.container}>
-      <div className={s.profile}>
+    <div className={styles.container}>
+      <div className={styles.profile}>
         <Image src={profilePic} alt="Profile Picture" height={32} width={32} />
       </div>
-      <div className={s.icons}>
+      <div className={styles.icons}>
         <button>
           <CheckboxSVG />
         </button>
@@ -21,8 +21,8 @@ const Sidebar = ({ profilePic }) => {
           <SearchSVG />
         </button>
       </div>
-      <div className={s.secondIconPack}>
-        <div className={s.icons}>
+      <div className={styles.secondIconPack}>
+        <div className={styles.icons}>
           <button>
             <TimerSVG />
           </button>

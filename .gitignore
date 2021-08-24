@@ -35,5 +35,4 @@ yarn-error.log*
 
 # references and annotations
 /references
-/pages/api
-/pages/test
+/src/pages/api/

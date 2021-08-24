@@ -1,8 +1,8 @@
-import s from "../../styles/Login.module.scss";
+import styles from "../../styles/Login.module.scss";
 
-const LoginButton = ({ disabled, children }) => {
+const LoginButton = ({ disabled, click, children }) => {
   return (
-    <button className={s.actionButton} disabled={disabled}>
+    <button className={styles.actionButton} disabled={disabled} onClick={click}>
       {children}
     </button>
   );

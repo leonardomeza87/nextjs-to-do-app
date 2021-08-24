@@ -1,4 +1,4 @@
-import s from "../../styles/Login.module.scss";
+import styles from "../../styles/Login.module.scss";
 import EyeSVG from "../../../public/assets/eye.svg";
 import EyeOffSVG from "../../../public/assets/eye-off.svg";
 
@@ -15,11 +15,14 @@ const LoginFormField = ({
   handleShowPassword,
 }) => {
   return (
-    <div className={s.formField}>
-      <label htmlFor={type} className={value || focus ? s.active : undefined}>
+    <div className={styles.formField}>
+      <label
+        htmlFor={type}
+        className={value || focus ? styles.active : undefined}
+      >
         {type === "email" ? "Email Adress" : "Password"}
       </label>
-      <div className={s.inputWrapper}>
+      <div className={styles.inputWrapper}>
         <input
           id={type}
           type={
@@ -35,7 +38,11 @@ const LoginFormField = ({
         />
         <fieldset
           className={
-            focus ? s.borderFocus : error ? s.borderFocusError : undefined
+            focus
+              ? styles.borderFocus
+              : error
+              ? styles.borderFocusError
+              : undefined
           }
         />
         {type === "password" && (

@@ -69,6 +69,29 @@ const Login = () => {
     setPassword(document.getElementById("password").value);
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Logging in");
+
+    const connect = async () => {
+      const res = await fetch("https://tdap-db.herokuapp.com/auth/" + email);
+      const data = await res.json();
+
+      if (data.password) {
+        console.log(data);
+        if (password === data.password) {
+          console.log("Successful login");
+        } else {
+          console.log("The password entered is not correct");
+        }
+      } else {
+        console.log("The email entered is not registered");
+      }
+    };
+
+    connect();
+  };
+
   return (
     <>
       <Head>
@@ -115,7 +138,9 @@ const Login = () => {
             <a>Forgot Your Password</a>
           </Link>
         </div>
-        <LoginButton disabled={!email || !password}>Log in now</LoginButton>
+        <LoginButton disabled={!email || !password} click={handleSubmit}>
+          Log in now
+        </LoginButton>
       </LoginContainer>
     </>
   );
