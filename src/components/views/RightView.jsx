@@ -1,4 +1,9 @@
 import styles from "../../styles/RightView.module.scss";
+
+import ListIcon from "../../../public/assets/albums-outline.svg";
+import FontIcon from "../../../public/assets/text.svg";
+import EllipsisIcon from "../../../public/assets/ellipsis-horizontal.svg";
+import FlagIcon from "../../../public/assets/flag.svg";
 import TaskDescription from "../TaskDescription";
 
 const RightView = () => {
@@ -12,15 +17,25 @@ const RightView = () => {
           <input type="date" name="" id="" />
         </div>
         <div className={styles.btn}>
-          <button>IM</button>
+          <button>
+            <FlagIcon />
+          </button>
         </div>
       </header>
       <TaskDescription />
       <footer className={styles.footer}>
-        <button>Section</button>
+        <button>
+          <div className={styles.iconContainer}>
+            <ListIcon />
+          </div>
+          <p>Inbox</p>
+        </button>
         <div className={styles.options}>
-          <button>A</button>
-          <button>Options</button>
+          <button>
+            <div className={styles.iconContainer}>
+              <EllipsisIcon />
+            </div>
+          </button>
         </div>
       </footer>
     </section>

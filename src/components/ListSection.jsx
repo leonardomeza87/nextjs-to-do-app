@@ -4,6 +4,7 @@ import List from "./List";
 import ChevronIcon from "../../public/assets/chevron-down.svg";
 import AddIcon from "../../public/assets/add.svg";
 import MenuIcon from "../../public/assets/menu.svg";
+import TagIcon from "../../public/assets/pricetag-outline.svg";
 
 const ListSection = () => {
   const [showLists, setShowLists] = useState(true);
@@ -69,11 +70,11 @@ const ListSection = () => {
         </button>
         {showTags && (
           <div className={styles.listsContainer}>
-            <List title="gg" svg={<MenuIcon />} />
-            <List title="gg" svg={<MenuIcon />} />
-            <List title="gg" svg={<MenuIcon />} />
-            <List title="gg" svg={<MenuIcon />} />
-            <List title="gg" svg={<MenuIcon />} />
+            <List title="gg" svg={<TagIcon />} />
+            <List title="gg" svg={<TagIcon />} />
+            <List title="gg" svg={<TagIcon />} />
+            <List title="gg" svg={<TagIcon />} />
+            <List title="gg" svg={<TagIcon />} />
           </div>
         )}
       </div>

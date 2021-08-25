@@ -1,7 +1,6 @@
 import Image from "next/image";
 import styles from "../styles/Sidebar.module.scss";
-import CheckboxSVG from "../../public/assets/checkbox.svg";
-import CalendarSVG from "../../public/assets/calendar.svg";
+import SyncIcon from "../../public/assets/sync.svg";
 import SearchSVG from "../../public/assets/search.svg";
 import TimerSVG from "../../public/assets/timer.svg";
 import NotificationsSVG from "../../public/assets/notifications.svg";
@@ -15,7 +14,7 @@ const Sidebar = ({ profilePic }) => {
       </div>
       <div className={styles.icons}>
         <button>
-          <CheckboxSVG />
+          <SyncIcon />
         </button>
         <button>
           <SearchSVG />

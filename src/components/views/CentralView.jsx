@@ -1,5 +1,5 @@
 import styles from "../../styles/CentralView.module.scss";
-import MenuSVG from "../../../public/assets/menu.svg";
+import ChevronIcon from "../../../public/assets/chevron-back.svg";
 import FilterSVG from "../../../public/assets/filter.svg";
 import EllipsisSVG from "../../../public/assets/ellipsis-horizontal.svg";
 import TaskGrouper from "../TaskGrouper";
@@ -9,7 +9,7 @@ const CentralView = () => {
     <section className={styles.container}>
       <header className={styles.header}>
         <button>
-          <MenuSVG />
+          <ChevronIcon />
         </button>
         <h1>Today</h1>
         <div className={styles.icons}>
@@ -26,9 +26,9 @@ const CentralView = () => {
       </div>
       <div className={styles.tasksContainer}>
         <div className={styles.tasksContainer2}>
-          <TaskGrouper />
-          <TaskGrouper />
-          <TaskGrouper />
+          <TaskGrouper open={false} />
+          <TaskGrouper open={true} />
+          <TaskGrouper open={false} />
         </div>
       </div>
     </section>

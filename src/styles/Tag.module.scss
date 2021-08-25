@@ -1,0 +1,16 @@
+.container {
+  height: 18px;
+  border-radius: 9px;
+  background-color: rgba($color: #009c00, $alpha: 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+
+  p {
+    font-size: 12px;
+    line-height: 12px;
+    color: #555;
+  }
+}

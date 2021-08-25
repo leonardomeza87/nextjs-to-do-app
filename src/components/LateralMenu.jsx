@@ -1,6 +1,6 @@
 import styles from "../styles/LateralMenu.module.scss";
-import MenuSVG from "../../public/assets/menu.svg";
-import CalendarSVG from "../../public/assets/calendar.svg";
+import ChevronIcon from "../../public/assets/chevron-forward.svg";
+import RocketIcon from "../../public/assets/rocket.svg";
 import Filter from "./Filter";
 import FilterSection from "./FilterSection";
 import ListSection from "./ListSection";
@@ -17,7 +17,13 @@ const LateralMenu = () => {
           <FilterSection />
         </div>
         <div className={styles.spam}>
+          <div className={styles.iconContainer}>
+            <RocketIcon />
+          </div>
           <p>Buy the premium!</p>
+          <div className={styles.iconContainer}>
+            <ChevronIcon />
+          </div>
         </div>
       </div>
     </div>

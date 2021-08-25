@@ -1,8 +1,10 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 58px 1fr;
   height: 100%;
-  // padding: 1rem;
+  scrollbar-width: thin;
+  overflow-y: scroll;
+  // padding: 0 0 1rem;
 }
 
 .title {
@@ -22,7 +24,7 @@
 
 .textarea {
   padding: 0 20px 12px;
-  height: 100%;
+  height: auto;
 
   textarea {
     width: 100%;
@@ -32,7 +34,46 @@
     line-height: 22px;
     padding: 0.25rem;
     border: none;
+    overflow: hidden;
     scrollbar-width: thin;
     background-color: var(--color);
+    margin-bottom: 24px;
+  }
+}
+
+.tags {
+  padding: 0 20px 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+
+  &:hover > svg {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+  }
+}
+
+.addTag {
+  height: 18px;
+  border-radius: 9px;
+  background-color: rgba($color: #868686, $alpha: 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+  margin-left: 6px;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    color: #555;
   }
 }

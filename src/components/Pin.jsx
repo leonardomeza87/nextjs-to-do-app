@@ -1,5 +1,5 @@
 import styles from "../styles/Pin.module.scss";
-import MenuSVG from "../../public/assets/calendar.svg";
+import MenuSVG from "../../public/assets/menu.svg";
 
 const Pin = () => {
   return (

@@ -4,8 +4,8 @@ import ChevronSVG from "../../public/assets/chevron-down.svg";
 import PinSVG from "../../public/assets/pin-outline.svg";
 import { useState } from "react";
 
-const TaskGrouper = () => {
-  const [showTasks, setShowTasks] = useState(true);
+const TaskGrouper = ({ open }) => {
+  const [showTasks, setShowTasks] = useState(open);
 
   const handlShowTasks = () => {
     setShowTasks(!showTasks);

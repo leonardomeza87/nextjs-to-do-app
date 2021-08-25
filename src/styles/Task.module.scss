@@ -14,6 +14,8 @@
   }
 
   input {
+    width: 16px;
+    height: 16px;
     margin: 0 12px;
     cursor: pointer;
   }
@@ -21,7 +23,7 @@
   p {
     font-size: 14px;
     line-height: 14px;
-    width: 100%;
+    margin-right: auto;
   }
 
   span {
@@ -29,4 +31,10 @@
     font-size: 12px;
     line-height: 12px;
   }
+}
+
+.tagContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

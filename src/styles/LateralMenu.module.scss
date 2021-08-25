@@ -37,24 +37,6 @@
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.spam {
-  position: absolute;
-  height: 32px;
-  width: 100%;
-  background-color: rgb(236, 102, 102);
-  color: #fff;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  p {
-    font-size: 12px;
-    line-height: 12px;
-  }
-}
-
 .firstFilters {
   width: 94%;
   padding: 0.25rem 0;
@@ -79,4 +61,44 @@
   width: 94%;
   padding: 0.25rem 0;
   border-bottom: 1px solid #000;
+}
+
+.spam {
+  position: absolute;
+  height: 32px;
+  width: 100%;
+  background-color: rgb(236, 102, 102);
+  color: #fff;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 16px;
+
+  p {
+    font-size: 12px;
+    line-height: 12px;
+    margin: 0 1rem;
+  }
+}
+
+.iconContainer {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  fill: #fff;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.iconContainer:last-child {
+  width: 14px;
+  height: 14px;
 }
