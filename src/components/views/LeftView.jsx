@@ -1,11 +1,12 @@
+import styles from "../../styles/LeftView.module.scss";
+
 import Sidebar from "../Sidebar";
 import LateralMenu from "../LateralMenu";
-import styles from "../../styles/LeftView.module.scss";
 
 const LeftView = () => {
   return (
-    <div className={styles.lateral}>
-      <Sidebar profilePic="/assets/profile.png" />
+    <div className={styles.container}>
+      <Sidebar />
       <LateralMenu />
     </div>
   );

@@ -4,7 +4,7 @@ import ChevronSVG from "../../public/assets/chevron-down.svg";
 import PinSVG from "../../public/assets/pin-outline.svg";
 import { useState } from "react";
 
-const TaskGrouper = ({ open }) => {
+const TaskGrouper = ({ name, open, tasks }) => {
   const [showTasks, setShowTasks] = useState(open);
 
   const handlShowTasks = () => {
@@ -20,16 +20,15 @@ const TaskGrouper = ({ open }) => {
         {/* <span>
           <PinSVG />
         </span> */}
-        <h2>Group</h2>
+        <h2>{name}</h2>
       </button>
       {showTasks && (
         <div className={styles.taskContainer}>
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
+          {tasks &&
+            tasks.map((task) => {
+              // console.log(task);
+              return <Task key={task.id} task={task} />;
+            })}
         </div>
       )}
     </div>

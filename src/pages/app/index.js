@@ -1,17 +1,23 @@
 import React from "react";
-import Views from "../../components/views/Views";
+
 import styles from "../../styles/App.module.scss";
 
-const App = ({ data }) => {
-  const UserData = React.createContext(data);
+import Views from "../../components/views/Views";
+import { UserContext } from "../../contexts/UserContext";
+import { TimeContext } from "../../contexts/TimeContext";
 
-  console.log(data);
+const App = ({ data, time }) => {
+  // export const UserData = React.createContext(data);
+
+  // console.log(time);
 
   return (
     <div className={styles.app}>
-      <UserData.Provider value={data}>
-        <Views />
-      </UserData.Provider>
+      <UserContext.Provider value={data}>
+        <TimeContext.Provider value={time}>
+          <Views />
+        </TimeContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 };
@@ -19,11 +25,15 @@ const App = ({ data }) => {
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`https://tdap-db.herokuapp.com/users/1`);
-  const data = await res.json();
+  const res1 = await fetch(`https://tdap-db.herokuapp.com/users/1`);
+  const data = await res1.json();
+
+  const res2 = await fetch(`http://worldclockapi.com/api/json/utc/now`);
+  let time = await res2.json();
+  time = time.currentDateTime.slice(0, 10);
 
   // Pass data to the page via props
-  return { props: { data } };
+  return { props: { data, time } };
 }
 
 export default App;

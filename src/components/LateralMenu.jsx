@@ -1,10 +1,9 @@
 import styles from "../styles/LateralMenu.module.scss";
-import ChevronIcon from "../../public/assets/chevron-forward.svg";
-import RocketIcon from "../../public/assets/rocket.svg";
-import Filter from "./Filter";
+
+import PinArea from "./PinArea";
 import FilterSection from "./FilterSection";
 import ListSection from "./ListSection";
-import PinArea from "./PinArea";
+import UpgradeButton from "./UpgradeButton";
 
 const LateralMenu = () => {
   return (
@@ -16,15 +15,7 @@ const LateralMenu = () => {
           <ListSection />
           <FilterSection />
         </div>
-        <div className={styles.spam}>
-          <div className={styles.iconContainer}>
-            <RocketIcon />
-          </div>
-          <p>Buy the premium!</p>
-          <div className={styles.iconContainer}>
-            <ChevronIcon />
-          </div>
-        </div>
+        <UpgradeButton />
       </div>
     </div>
   );

@@ -1,12 +1,20 @@
 import styles from "../../styles/RightView.module.scss";
 
+import { useState } from "react";
+
 import ListIcon from "../../../public/assets/albums-outline.svg";
-import FontIcon from "../../../public/assets/text.svg";
 import EllipsisIcon from "../../../public/assets/ellipsis-horizontal.svg";
 import FlagIcon from "../../../public/assets/flag.svg";
 import TaskDescription from "../TaskDescription";
 
 const RightView = () => {
+  const [date, setDate] = useState("");
+
+  const handleChange = (e) => {
+    setDate(e.target.value);
+    // Date.parse(
+  };
+
   return (
     <section className={styles.container}>
       <header>
@@ -14,7 +22,13 @@ const RightView = () => {
           <input type="checkbox" name="" id="" />
         </div>
         <div className={styles.dateContainer}>
-          <input type="date" name="" id="" />
+          <input
+            type="date"
+            name=""
+            id=""
+            value={date}
+            onChange={handleChange}
+          />
         </div>
         <div className={styles.btn}>
           <button>

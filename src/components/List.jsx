@@ -4,9 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import EllipsisIcon from "../../public/assets/ellipsis-horizontal.svg";
 
-const List = ({ title, url, svg }) => {
-  let quantity = 5;
-
+const List = ({ title, url, svg, quantity }) => {
   const handleClick = (e) => {
     e.preventDefault();
   };
@@ -15,7 +13,7 @@ const List = ({ title, url, svg }) => {
 
   return (
     <div className={styles.list}>
-      <Link href={`/app?=${url}`}>
+      <Link href={`/app?${url}`}>
         <a>
           <div className={styles.iconContainer}>{svg}</div>
           <p>{title}</p>

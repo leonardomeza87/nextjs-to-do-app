@@ -1,5 +1,5 @@
-import Link from "next/link";
 import styles from "../../styles/Views.module.scss";
+
 import LeftView from "./LeftView";
 import CentralView from "./CentralView";
 import RightView from "./RightView";

@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+
 import styles from "../styles/ListSection.module.scss";
+
 import List from "./List";
+
 import ChevronIcon from "../../public/assets/chevron-down.svg";
 import AddIcon from "../../public/assets/add.svg";
 import MenuIcon from "../../public/assets/menu.svg";
 import TagIcon from "../../public/assets/pricetag-outline.svg";
 
+import { UserContext } from "../contexts/UserContext";
+
 const ListSection = () => {
+  const { lists, tags } = useContext(UserContext);
+
   const [showLists, setShowLists] = useState(true);
   const [showTags, setShowTags] = useState(false);
 
@@ -19,11 +26,9 @@ const ListSection = () => {
 
   const handleAddList = (e) => {
     e.stopPropagation();
-    console.log("add list");
   };
   const handleAddTag = (e) => {
     e.stopPropagation();
-    console.log("add tag");
   };
 
   return (
@@ -46,11 +51,17 @@ const ListSection = () => {
         </button>
         {showLists && (
           <div className={styles.listsContainer}>
-            <List title="Work" svg={<MenuIcon />} />
-            <List title="Work" svg={<MenuIcon />} />
-            <List title="Work" svg={<MenuIcon />} />
-            <List title="Work" svg={<MenuIcon />} />
-            <List title="Work" svg={<MenuIcon />} />
+            {lists.map((list) => {
+              return (
+                <List
+                  key={list.name}
+                  title={list.name}
+                  url={"list=" + list.id}
+                  svg={<MenuIcon />}
+                  quantity={list.tasks.length}
+                />
+              );
+            })}
           </div>
         )}
         <button onClick={handlShowTags} className={styles.btn}>
@@ -70,11 +81,17 @@ const ListSection = () => {
         </button>
         {showTags && (
           <div className={styles.listsContainer}>
-            <List title="gg" svg={<TagIcon />} />
-            <List title="gg" svg={<TagIcon />} />
-            <List title="gg" svg={<TagIcon />} />
-            <List title="gg" svg={<TagIcon />} />
-            <List title="gg" svg={<TagIcon />} />
+            {tags.map((tag) => {
+              return (
+                <List
+                  key={tag.name}
+                  title={tag.name}
+                  url={"tag=" + tag.id}
+                  svg={<TagIcon />}
+                  quantity={tag.tasks.length}
+                />
+              );
+            })}
           </div>
         )}
       </div>
