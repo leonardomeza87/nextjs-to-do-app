@@ -12,7 +12,8 @@ import TagIcon from "../../public/assets/pricetag-outline.svg";
 import { UserContext } from "../contexts/UserContext";
 
 const ListSection = () => {
-  const { lists, tags } = useContext(UserContext);
+  const { data } = useContext(UserContext);
+  const { lists, tags } = data;
 
   const [showLists, setShowLists] = useState(true);
   const [showTags, setShowTags] = useState(false);

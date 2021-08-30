@@ -7,11 +7,13 @@ import SearchSVG from "../../public/assets/search.svg";
 import TimerSVG from "../../public/assets/timer.svg";
 import NotificationsSVG from "../../public/assets/notifications.svg";
 import EllipsisSVG from "../../public/assets/ellipsis-horizontal.svg";
+
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const Sidebar = () => {
-  const { avatar } = useContext(UserContext);
+  const { data, setData } = useContext(UserContext);
+  const { avatar } = data;
 
   // console.log(user.avatar);
 
@@ -28,7 +30,15 @@ const Sidebar = () => {
         />
       </div>
       <div className={styles.icons}>
-        <button>
+        <button
+          onClick={() => {
+            setData({
+              ...data,
+              avatar:
+                "https://images.unsplash.com/photo-1602620502036-e52519d58d92?ixid=MnwyMDU4NzZ8MHwxfGFsbHx8fHx8fHx8fDE2MTc5MTAzMTc&ixlib=rb-1.2.1&fm=jpg&q=85&fit=crop&w=1200&h=675",
+            });
+          }}
+        >
           <SyncIcon />
         </button>
         <button>

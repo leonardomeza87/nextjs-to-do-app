@@ -6,7 +6,8 @@ import { UserContext } from "../contexts/UserContext";
 import { TimeContext } from "../contexts/TimeContext";
 
 const Filter = ({ title, svg, filter }) => {
-  const { tasks } = useContext(UserContext);
+  const { data } = useContext(UserContext);
+  const { tasks } = data;
   // const time = useContext(TimeContext);
   const time = "2021-08-23";
 

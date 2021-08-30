@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "../../styles/App.module.scss";
 
@@ -6,14 +6,21 @@ import Views from "../../components/views/Views";
 import { UserContext } from "../../contexts/UserContext";
 import { TimeContext } from "../../contexts/TimeContext";
 
-const App = ({ data, time }) => {
-  // export const UserData = React.createContext(data);
+const App = ({ userData, time }) => {
+  // userData = { ...userData, lasUpdate: time.fullTime };
 
-  // console.log(time);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("user-data", JSON.stringify(userData));
+  }
+
+  console.log(time.date);
+
+  const [data, setData] = useState(userData);
+  const value = { data, setData };
 
   return (
     <div className={styles.app}>
-      <UserContext.Provider value={data}>
+      <UserContext.Provider value={value}>
         <TimeContext.Provider value={time}>
           <Views />
         </TimeContext.Provider>
@@ -22,18 +29,24 @@ const App = ({ data, time }) => {
   );
 };
 
+export default App;
+
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res1 = await fetch(`https://tdap-db.herokuapp.com/users/1`);
-  const data = await res1.json();
 
-  const res2 = await fetch(`http://worldclockapi.com/api/json/utc/now`);
-  let time = await res2.json();
-  time = time.currentDateTime.slice(0, 10);
+  const response = await fetch(`https://tdap-db.herokuapp.com/users/1`);
+  const userData = await response.json();
+
+  const response2 = await fetch(`http://worldclockapi.com/api/json/utc/now`);
+  const { currentDateTime } = await response2.json();
+
+  const time = {
+    fullTime: new Date(currentDateTime).getTime(),
+    date: currentDateTime.slice(0, 10),
+    hour: currentDateTime.slice(11, -1),
+  };
 
   // Pass data to the page via props
-  return { props: { data, time } };
+  return { props: { userData, time } };
 }
-
-export default App;

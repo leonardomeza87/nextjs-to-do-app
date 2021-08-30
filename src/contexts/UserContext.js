@@ -1,6 +1,6 @@
 import React from "react";
 
-const user = {
+const userData = {
   id: 1,
   name: "User",
   email: "user@email.com",
@@ -11,4 +11,7 @@ const user = {
   lists: [],
 };
 
-export const UserContext = React.createContext(user);
+export const UserContext = React.createContext({
+  data: userData,
+  setData: () => {},
+});
