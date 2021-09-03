@@ -26,7 +26,6 @@ const TaskGrouper = ({ name, open, tasks }) => {
         <div className={styles.taskContainer}>
           {tasks &&
             tasks.map((task) => {
-              // console.log(task);
               return <Task key={task.id} task={task} />;
             })}
         </div>

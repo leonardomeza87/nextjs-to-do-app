@@ -6,19 +6,19 @@ import { UserContext } from "../contexts/UserContext";
 import { TimeContext } from "../contexts/TimeContext";
 
 const Filter = ({ title, svg, filter }) => {
-  const { data } = useContext(UserContext);
+  const data = useContext(UserContext);
   const { tasks } = data;
-  // const time = useContext(TimeContext);
-  const time = "2021-08-23";
+  const time = useContext(TimeContext);
 
   let numberOfTasks = 0;
 
   switch (filter) {
     case "today":
       tasks.forEach((el) => {
-        if (el.date) {
-          const date = new Date(el.date).toISOString().split("T")[0];
-          if (date === time) {
+        if (el.deadline) {
+          const date = new Date(el.deadline).toISOString().split("T")[0];
+          // console.log(date);
+          if (date === time.date) {
             numberOfTasks++;
           }
         }
@@ -26,8 +26,8 @@ const Filter = ({ title, svg, filter }) => {
       break;
     case "tomorrow":
       tasks.forEach((el) => {
-        if (el.date) {
-          const date = new Date(el.date).toISOString().split("T")[0];
+        if (el.deadline) {
+          const date = new Date(el.deadline).toISOString().split("T")[0];
           let taskDay = new Date(date).getUTCDate();
           let timeDay = new Date(time).getUTCDate() + 1;
           if (taskDay === timeDay) {
@@ -38,8 +38,8 @@ const Filter = ({ title, svg, filter }) => {
       break;
     case "week":
       tasks.forEach((el) => {
-        if (el.date) {
-          const date = new Date(el.date).toISOString().split("T")[0];
+        if (el.deadline) {
+          const date = new Date(el.deadline).toISOString().split("T")[0];
           let taskDay = new Date(date).getUTCDate();
           let timeDay = new Date(time).getUTCDate() + 1;
           if (taskDay > timeDay && taskDay < timeDay + 7) {

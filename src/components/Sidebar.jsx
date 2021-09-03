@@ -12,10 +12,8 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 const Sidebar = () => {
-  const { data, setData } = useContext(UserContext);
-  const { avatar } = data;
-
-  // console.log(user.avatar);
+  const user = useContext(UserContext);
+  const { avatar } = user;
 
   return (
     <div className={styles.container}>
@@ -32,8 +30,8 @@ const Sidebar = () => {
       <div className={styles.icons}>
         <button
           onClick={() => {
-            setData({
-              ...data,
+            user.setContext({
+              ...user,
               avatar:
                 "https://images.unsplash.com/photo-1602620502036-e52519d58d92?ixid=MnwyMDU4NzZ8MHwxfGFsbHx8fHx8fHx8fDE2MTc5MTAzMTc&ixlib=rb-1.2.1&fm=jpg&q=85&fit=crop&w=1200&h=675",
             });

@@ -1,6 +1,6 @@
 import styles from "../styles/TaskAggregator.module.scss";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 import { TimeContext } from "../contexts/TimeContext";
@@ -21,14 +21,26 @@ const TaskAggregator = () => {
     inTrash: false,
   };
 
-  const [value, setValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
   const { query } = useRouter();
 
   const time = useContext(TimeContext);
-  const { data, setData } = useContext(UserContext);
-  const { lists, tags, tasks } = data;
+  const user = useContext(UserContext);
+
+  const { lists, tags, tasks } = user;
   const { filter, list, tag } = query;
 
+  const [allTasks, setAllTasks] = useState(tasks);
+  const [updater, setUpdater] = useState(0);
+  const [onListSection, setOnListSection] = useState(false);
+  const [onTagSection, setOnTagSection] = useState(false);
+
+  const [listId, setListId] = useState(null);
+  const [tagId, setTagId] = useState(null);
+  const [deadlineDate, setDeadlineDate] = useState(null);
+
+  //days
   function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -36,70 +48,136 @@ const TaskAggregator = () => {
     return result.toISOString().slice(0, 10);
   }
 
-  let placeholder = "";
+  const [placeholder, setPlaceholder] = useState("");
 
-  if (filter) {
-    let { date } = time;
+  useEffect(() => {
+    setDeadlineDate(null);
+  }, [query]);
 
-    switch (filter) {
-      case "today":
-        template.deadline = date;
-        placeholder = `Add task with due date for "Today"`;
-        break;
-      case "tomorrow":
-        template.deadline = addDays(date, 1);
-        placeholder = `Add task with due date for "Tomorrow"`;
-        break;
-      case "week":
-        template.deadline = addDays(date, 7);
-        placeholder = `Add task with deadline within "7 days"`;
-        break;
-    }
-  } else if (list) {
-    for (const { id, name } of lists) {
-      if (id === Number(list)) {
-        template.list = id;
-        placeholder = `Add task to list "${name}"`;
-        break;
+  useEffect(() => {
+    if (filter) {
+      let { date } = time;
+
+      switch (filter) {
+        case "today":
+          setDeadlineDate(date);
+          setPlaceholder(`Add task with due date for "Today"`);
+          break;
+        case "tomorrow":
+          setDeadlineDate(addDays(date, 1));
+          setPlaceholder(`Add task with due date for "Tomorrow"`);
+          break;
+        case "week":
+          setDeadlineDate(addDays(date, 7));
+          setPlaceholder(`Add task with deadline within "7 days"`);
+          break;
+        case "unlisted":
+          setPlaceholder(`Add task to "Inbox"`);
+          break;
       }
-    }
-  } else if (tag) {
-    for (const { id, name } of tags) {
-      if (id === Number(tag)) {
-        template.tags = [id];
-        placeholder = `Add task with tag "${name}"`;
-        break;
+
+      setOnListSection(false);
+      setOnTagSection(false);
+    } else if (list) {
+      for (const { id, name } of lists) {
+        if (id === Number(list)) {
+          setListId(id);
+          console.log(template.list);
+          setOnListSection(true);
+          setPlaceholder(`Add task to list "${name}"`);
+          break;
+        }
       }
+      setOnTagSection(false);
+    } else if (tag) {
+      for (let { id, name } of tags) {
+        if (id === Number(tag)) {
+          setTagId(id);
+          setOnTagSection(true);
+          setPlaceholder(`Add task with tag "${name}"`);
+          break;
+        }
+      }
+      setOnListSection(false);
     }
-  }
+  }, [user]);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
+      let currentDate = time.fullTime.toString().slice(0, -6);
+      let currentSecond = Date.now().toString().slice(-6);
+
+      template.id = Number(currentDate + currentSecond);
+      template.creationDate = new Date(Number(currentDate + currentSecond))
+        .toISOString()
+        .slice(0, -8);
+      template.deadline = deadlineDate;
+      template.title = inputValue;
+      template.list = listId;
+      template.tags = [tagId];
       console.log(template);
 
-      template.id = Number(
-        time.fullTime.toString().slice(0, -6) + Date.now().toString().slice(-6)
-      );
-      template.title = value;
-      console.log(template);
+      addTask(template);
 
-      let newData = data;
-      newData.tasks.push(template);
+      if (onListSection) {
+        updateLists(template);
+      } else if (onTagSection) {
+        console.log(template.tags);
+        updateTags(template);
+      }
 
-      setData(newData);
+      setListId(null);
+      setTagId(null);
+      setDeadlineDate(null);
+
+      // user.setContext(newData);
     }
   };
+
+  const updateLists = (task) => {
+    let listsCopy = user.lists;
+    listsCopy.forEach((list) => {
+      if (list.id === task.list) {
+        list.tasks.push(task.id);
+      }
+    });
+
+    user.setContext({ ...user, lists: listsCopy });
+  };
+  const updateTags = (task) => {
+    let tagsCopy = user.tags;
+    tagsCopy.forEach((tag) => {
+      if (tag.id === task.tags[0]) {
+        tag.tasks.push(task.id);
+      }
+    });
+
+    user.setContext({ ...user, tags: tagsCopy });
+  };
+
+  const addTask = (task) => {
+    // setNewData(task);
+
+    setAllTasks([...allTasks, task]);
+    setUpdater(Date.now());
+    // console.log(tasks);
+    // console.log("seteando");
+  };
+
+  useEffect(() => {
+    user.setContext({ ...user, tasks: allTasks });
+  }, [updater]);
 
   return (
     <div className={styles.container}>
       <input
         type="text"
         placeholder={placeholder ? placeholder : `Add task to "Inbox"`}
-        value={value}
+        value={inputValue}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
       />

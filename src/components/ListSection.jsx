@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import styles from "../styles/ListSection.module.scss";
 
@@ -12,11 +12,17 @@ import TagIcon from "../../public/assets/pricetag-outline.svg";
 import { UserContext } from "../contexts/UserContext";
 
 const ListSection = () => {
-  const { data } = useContext(UserContext);
-  const { lists, tags } = data;
+  const data = useContext(UserContext);
 
   const [showLists, setShowLists] = useState(true);
   const [showTags, setShowTags] = useState(false);
+  const [dataLists, setDataLists] = useState([]);
+  const [dataTags, setDataTags] = useState([]);
+
+  useEffect(() => {
+    setDataLists(data.lists);
+    setDataTags(data.tags);
+  }, [data]);
 
   const handlShowLists = () => {
     setShowLists(!showLists);
@@ -52,7 +58,7 @@ const ListSection = () => {
         </button>
         {showLists && (
           <div className={styles.listsContainer}>
-            {lists.map((list) => {
+            {dataLists.map((list) => {
               return (
                 <List
                   key={list.name}
@@ -82,7 +88,7 @@ const ListSection = () => {
         </button>
         {showTags && (
           <div className={styles.listsContainer}>
-            {tags.map((tag) => {
+            {dataTags.map((tag) => {
               return (
                 <List
                   key={tag.name}

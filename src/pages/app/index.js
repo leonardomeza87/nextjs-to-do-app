@@ -1,26 +1,48 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import styles from "../../styles/App.module.scss";
 
 import Views from "../../components/views/Views";
-import { UserContext } from "../../contexts/UserContext";
 import { TimeContext } from "../../contexts/TimeContext";
+import { UserContext } from "../../contexts/UserContext";
 
-const App = ({ userData, time }) => {
-  // userData = { ...userData, lasUpdate: time.fullTime };
+const getDefaultState = () => {
+  // TODO rehydrate from local storage
+  return {
+    id: 1,
+    name: "User",
+    email: "user@email.com",
+    account_creationDate: 1629930457475,
+    premium: false,
+    avatar:
+      "https://img.poki.com/cdn-cgi/image/quality=100,width=200,height=200/b5bd34054bc849159d949d50021d8926.png",
+    tasks: [],
+    lists: [],
+    tags: [],
+  };
+};
 
-  if (typeof window !== "undefined") {
-    localStorage.setItem("user-data", JSON.stringify(userData));
-  }
+const App = ({ dbData, time }) => {
+  const [data, setData] = useState(dbData);
 
-  console.log(time.date);
+  const setContext = useCallback(
+    (updates) => {
+      setData({ ...data, ...updates });
+    },
+    [data, setData]
+  );
 
-  const [data, setData] = useState(userData);
-  const value = { data, setData };
+  const getContextValue = useCallback(
+    () => ({
+      ...data,
+      setContext,
+    }),
+    [data, setContext]
+  );
 
   return (
     <div className={styles.app}>
-      <UserContext.Provider value={value}>
+      <UserContext.Provider value={getContextValue()}>
         <TimeContext.Provider value={time}>
           <Views />
         </TimeContext.Provider>
@@ -36,7 +58,7 @@ export async function getServerSideProps() {
   // Fetch data from external API
 
   const response = await fetch(`https://tdap-db.herokuapp.com/users/1`);
-  const userData = await response.json();
+  const dbData = await response.json();
 
   const response2 = await fetch(`http://worldclockapi.com/api/json/utc/now`);
   const { currentDateTime } = await response2.json();
@@ -48,5 +70,5 @@ export async function getServerSideProps() {
   };
 
   // Pass data to the page via props
-  return { props: { userData, time } };
+  return { props: { dbData, time } };
 }
