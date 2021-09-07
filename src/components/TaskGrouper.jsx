@@ -1,7 +1,10 @@
-import Task from "./Task";
 import styles from "../styles/TaskGrouper.module.scss";
+
+import Task from "./Task";
+
 import ChevronSVG from "../../public/assets/chevron-down.svg";
 import PinSVG from "../../public/assets/pin-outline.svg";
+
 import { useState } from "react";
 
 const TaskGrouper = ({ name, open, tasks }) => {
@@ -26,7 +29,13 @@ const TaskGrouper = ({ name, open, tasks }) => {
         <div className={styles.taskContainer}>
           {tasks &&
             tasks.map((task) => {
-              return <Task key={task.id} task={task} />;
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  completed={name === "Completed"}
+                />
+              );
             })}
         </div>
       )}

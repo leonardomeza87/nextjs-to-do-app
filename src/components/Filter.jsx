@@ -8,41 +8,49 @@ import { TimeContext } from "../contexts/TimeContext";
 const Filter = ({ title, svg, filter }) => {
   const data = useContext(UserContext);
   const { tasks } = data;
-  const time = useContext(TimeContext);
+  const { date } = useContext(TimeContext);
+
+  //helpers
+  const addDays = (date, days) => {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+
+    return result.toISOString().slice(0, 10);
+  };
+  const deadline = (date) => {
+    return new Date(date).toISOString().split("T")[0];
+  };
 
   let numberOfTasks = 0;
+  let taskDate = "";
 
   switch (filter) {
     case "today":
-      tasks.forEach((el) => {
-        if (el.deadline) {
-          const date = new Date(el.deadline).toISOString().split("T")[0];
+      tasks.forEach((task) => {
+        if (task.deadline) {
+          taskDate = deadline(task.deadline);
           // console.log(date);
-          if (date === time.date) {
+          if (taskDate === date) {
             numberOfTasks++;
           }
         }
       });
       break;
     case "tomorrow":
-      tasks.forEach((el) => {
-        if (el.deadline) {
-          const date = new Date(el.deadline).toISOString().split("T")[0];
-          let taskDay = new Date(date).getUTCDate();
-          let timeDay = new Date(time).getUTCDate() + 1;
-          if (taskDay === timeDay) {
+      tasks.forEach((task) => {
+        if (task.deadline) {
+          taskDate = deadline(task.deadline);
+          if (taskDate === addDays(date, 1)) {
             numberOfTasks++;
           }
         }
       });
       break;
     case "week":
-      tasks.forEach((el) => {
-        if (el.deadline) {
-          const date = new Date(el.deadline).toISOString().split("T")[0];
-          let taskDay = new Date(date).getUTCDate();
-          let timeDay = new Date(time).getUTCDate() + 1;
-          if (taskDay > timeDay && taskDay < timeDay + 7) {
+      tasks.forEach((task) => {
+        if (task.deadline) {
+          taskDate = deadline(task.deadline);
+          if (taskDate > addDays(date, 1) && date < addDays(taskDate, 7)) {
             numberOfTasks++;
           }
         }

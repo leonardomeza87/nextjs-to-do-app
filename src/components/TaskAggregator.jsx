@@ -82,7 +82,8 @@ const TaskAggregator = () => {
       for (const { id, name } of lists) {
         if (id === Number(list)) {
           setListId(id);
-          console.log(template.list);
+          setTagId(null);
+          // console.log(template.list);
           setOnListSection(true);
           setPlaceholder(`Add task to list "${name}"`);
           break;
@@ -90,11 +91,12 @@ const TaskAggregator = () => {
       }
       setOnTagSection(false);
     } else if (tag) {
-      for (let { id, name } of tags) {
+      for (let { id, label } of tags) {
         if (id === Number(tag)) {
           setTagId(id);
+          setListId(null);
           setOnTagSection(true);
-          setPlaceholder(`Add task with tag "${name}"`);
+          setPlaceholder(`Add task with tag "${label}"`);
           break;
         }
       }

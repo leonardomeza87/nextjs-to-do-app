@@ -92,7 +92,7 @@ const ListSection = () => {
               return (
                 <List
                   key={tag.name}
-                  title={tag.name}
+                  title={tag.label}
                   url={"tag=" + tag.id}
                   svg={<TagIcon />}
                   quantity={tag.tasks.length}

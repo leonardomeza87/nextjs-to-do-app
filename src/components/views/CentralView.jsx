@@ -1,6 +1,5 @@
 import styles from "../../styles/CentralView.module.scss";
 
-import TaskGrouper from "../TaskGrouper";
 import TaskAggregator from "../TaskAggregator";
 import CentralHeader from "../CentralHeader";
 
@@ -9,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../../contexts/UserContext";
 import { TimeContext } from "../../contexts/TimeContext";
+import TaskGrouperContainer from "../TaskGrouperContainer";
 
 const CentralView = () => {
   const user = useContext(UserContext);
@@ -27,14 +27,13 @@ const CentralView = () => {
     return new Date(date).toISOString().split("T")[0];
   };
 
-  const [pinnedTasks, setPinnedTasks] = useState([]);
-  const [unpinnedTasks, setUnpinnedTasks] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     let { tasks } = user;
     let { filter, list, tag } = query;
-    let filteredTasks = [];
+    let temporalTaskList = [];
 
     if (filter) {
       let taskDate = "";
@@ -44,46 +43,52 @@ const CentralView = () => {
           tasks.forEach((task) => {
             taskDate = deadline(task.deadline);
             if (taskDate === date) {
-              filteredTasks.push(task);
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Today");
           break;
         case "tomorrow":
           tasks.forEach((task) => {
             taskDate = deadline(task.deadline);
-            if (addDays(taskDate, 1) === date) {
-              filteredTasks.push(task);
+            if (addDays(date, 1) === taskDate) {
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Tomorrow");
           break;
         case "week":
           tasks.forEach((task) => {
             taskDate = deadline(task.deadline);
-            if (date < addDays(taskDate, 7)) {
-              filteredTasks.push(task);
+            if (taskDate > addDays(date, 1) && date < addDays(taskDate, 7)) {
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Week");
           break;
         case "unlisted":
           tasks.forEach((task) => {
             if (!task.list) {
-              filteredTasks.push(task);
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Inbox");
           break;
         case "completed":
           tasks.forEach((task) => {
             if (task.completed) {
-              filteredTasks.push(task);
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Completed");
           break;
         case "trash":
           tasks.forEach((task) => {
             if (task.list === "trash") {
-              filteredTasks.push(task);
+              temporalTaskList.push(task);
             }
           });
+          setTitle("Trash");
           break;
 
         default:
@@ -92,60 +97,34 @@ const CentralView = () => {
     } else if (list) {
       tasks.forEach((task) => {
         if (task.list === Number(list)) {
-          filteredTasks.push(task);
+          temporalTaskList.push(task);
         }
       });
+      setTitle(user.lists.find((el) => el.id === Number(list)).name);
     } else if (tag) {
       tasks.forEach((task) => {
         let { tags } = task;
         if (tags.length > 0) {
           tags.map((el) => {
             if (el === Number(tag)) {
-              filteredTasks.push(task);
+              temporalTaskList.push(task);
             }
           });
         }
       });
+      setTitle(user.tags.find((el) => el.id === Number(tag)).label);
     }
 
-    let aa = [];
-    let bb = [];
-    let cc = [];
-
-    filteredTasks.forEach((task) => {
-      if (task.completed) {
-        aa.push(task);
-      } else if (task.pinned) {
-        bb.push(task);
-      } else {
-        cc.push(task);
-      }
-    });
-
-    setCompletedTasks([...aa]);
-    setPinnedTasks([...bb]);
-    setUnpinnedTasks([...cc]);
+    setFilteredTasks(temporalTaskList);
   }, [user, date, query]);
 
   return (
     <section className={styles.container}>
-      <CentralHeader />
-      <TaskAggregator />
-      <div className={styles.tasksContainer}>
-        <div className={styles.tasksContainer2}>
-          {pinnedTasks.length > 0 && (
-            <TaskGrouper name="Pinned" open={true} tasks={pinnedTasks} />
-          )}
-
-          {unpinnedTasks.length > 0 && (
-            <TaskGrouper name="Unordered" open={true} tasks={unpinnedTasks} />
-          )}
-
-          {completedTasks.length > 0 && (
-            <TaskGrouper name="Completed" open={true} tasks={completedTasks} />
-          )}
-        </div>
-      </div>
+      <CentralHeader title={title} />
+      {query.filter != "completed" && query.filter != "trash" && (
+        <TaskAggregator />
+      )}
+      <TaskGrouperContainer filteredTasks={filteredTasks} />
     </section>
   );
 };

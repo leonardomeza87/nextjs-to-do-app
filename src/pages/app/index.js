@@ -45,6 +45,7 @@ const App = ({ dbData, time }) => {
       <UserContext.Provider value={getContextValue()}>
         <TimeContext.Provider value={time}>
           <Views />
+          <div id="menu"></div>
         </TimeContext.Provider>
       </UserContext.Provider>
     </div>

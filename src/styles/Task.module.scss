@@ -38,3 +38,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.completed {
+  > p,
+  span {
+    color: grey;
+    text-decoration: line-through;
+  }
+}

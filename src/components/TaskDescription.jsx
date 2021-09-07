@@ -1,11 +1,11 @@
-import autosize from "autosize";
-import { useEffect, useRef, useState } from "react";
-
 import styles from "../styles/TaskDescription.module.scss";
 
-import AddIcon from "../../public/assets/add.svg";
+import autosize from "autosize";
 
+import AddIcon from "../../public/assets/add.svg";
 import Tag from "./Tag";
+
+import { useEffect, useRef, useState } from "react";
 
 const TaskDescription = () => {
   const textarea = useRef(null);
